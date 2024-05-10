@@ -1,19 +1,10 @@
 name: Sync labels
 on:
   workflow_dispatch:
-  workflow_call:
-
 jobs:
-  build:
+  labels:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Synchronize labels
-        uses: julbme/gh-action-manage-label@v1
-        with:
-          from: https://github.com/mch2/.github/blob/master/.github/labels.yml
-          skip_delete: true
+      - run: for r in $(gh repo list mch2 --limit 100 | cut -f1); do echo $r ;  gh label create 'test-push-label' --description 'Test label' -c '#3B6BBD' --repo https://github.com/$r; done
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

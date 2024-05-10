@@ -2,8 +2,8 @@ name: Sync labels
 on:
   workflow_dispatch:
 jobs:
-  permissions: write-all
   labels:
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - run: for r in $(gh repo list mch2 --limit 100 | cut -f1); do echo $r ;  gh label create 'test-push-label' --description 'Test label' -c '#3B6BBD' --repo https://github.com/$r; done
